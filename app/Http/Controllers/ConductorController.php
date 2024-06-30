@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Conductor;
+use App\Models\SolicitarServicio;
 use Illuminate\Http\Request;
 
 class ConductorController extends Controller
@@ -38,21 +39,21 @@ class ConductorController extends Controller
             'celular' => 'required',
             'fecha_de_nacimiento' => 'required|date',
             'genero' => 'required',
-           
+
             'numero_de_licencia_de_conducir' => 'required',
             'tipo_de_licencia' => 'required|max:3',
             'fecha_de_vencimiento_de_la_licencia' => 'required',
             'celular' => 'required'
-           
+
         ]);
-        
+
         // Hashear la contraseña antes de guardar
         $validatedData['password'] = bcrypt($request->input('celular'));
 
         // Añadir valores estáticos a los datos validados
         $validatedData['tipo_usuario'] = 'Conductor'; // Valor estático para tipo_usuario
         $validatedData['id_rol'] = 2; // Valor estático para id_rol
-        $validatedData['estado']="inactivo"; 
+        $validatedData['estado']="inactivo";
         // Crear un nuevo cliente y guardar los datos
         $conductor =Conductor::create($validatedData);
 
@@ -70,7 +71,7 @@ class ConductorController extends Controller
      */
     public function show()
     {
-      
+
     }
 
     /**
@@ -100,7 +101,7 @@ class ConductorController extends Controller
             'fecha_de_vencimiento_de_la_licencia' => 'required',
             'celular' => 'required'
         ]);
-    
+
         // Si la contraseña está presente en la solicitud, hashearla
         if ($request->has('password') && !empty($request->input('password'))) {
             $validatedData['password'] = bcrypt($request->input('celular'));
@@ -108,15 +109,15 @@ class ConductorController extends Controller
             // Mantener la contraseña actual si no se envió una nueva
             unset($validatedData['password']);
         }
-    
+
         // Añadir valores estáticos a los datos validados
         $validatedData['tipo_usuario'] = 'Conductor'; // Valor estático para tipo_usuario
         $validatedData['id_rol'] = 3; // Valor estático para id_rol
-    
-        $validatedData['estado']="inactivo"; 
+
+        $validatedData['estado']="inactivo";
         // Actualizar el conductor y guardar los datos
         $conductor->update($validatedData);
-    
+
         // Verificar si el conductor fue actualizado correctamente
         if ($conductor) {
             return redirect()->route('conductor.index')->with('success', 'conductor actualizado correctamente');
@@ -132,5 +133,16 @@ class ConductorController extends Controller
         $conductor=Conductor::findOrFail($id);
         $conductor->delete();
         return redirect()->route('conductor.index');
+    }
+
+
+
+    public function login(){
+        return view('view-conductor.Auth.login');
+    }
+
+    public function inicio(){
+        $reservas=SolicitarServicio::where("id_conductor",auth()->user()->id)->orderBy('id', 'desc')->paginate(10);
+        return view('view-conductor.views.inicio',compact("reservas"));
     }
 }

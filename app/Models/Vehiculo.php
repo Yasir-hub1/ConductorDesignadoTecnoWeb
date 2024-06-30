@@ -23,8 +23,8 @@ class Vehiculo extends Model
 
     ];
 
-     /* uno a mucho en libros */
-     public function conductor(){
-        return $this->hasMany(Conductor::class,'id');
+    public function conductor()
+    {
+        return $this->belongsTo(Conductor::class, 'id_conductor', 'id');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Promocion;
+use App\Models\Servicio;
 use Illuminate\Http\Request;
 
 class PromocionController extends Controller
@@ -12,7 +13,8 @@ class PromocionController extends Controller
      */
     public function index()
     {
-        //
+        $promociones = Promocion::with('servicio')->orderBy('id', 'desc')->paginate(10);
+        return view("operativos.promocion.index", compact('promociones'));
     }
 
     /**
@@ -20,7 +22,8 @@ class PromocionController extends Controller
      */
     public function create()
     {
-        //
+        $servicios=Servicio::all();
+        return view("operativos.promocion.create",compact('servicios'));
     }
 
     /**
@@ -28,23 +31,43 @@ class PromocionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+           // Validar los datos del formulario
+           $validatedData = $request->validate([
+            'nombre' => 'required',
+            'descripcion' => 'required',
+            'fecha_inicio' => 'required',
+            'fecha_fin' => 'required',
+            'descuento' => 'required',
+            'id_servicio' => 'required',
+
+        ]);
+
+
+        $promo =Promocion::create($validatedData);
+
+        if ($promo) {
+            return redirect()->route('promocion.index')->with('success', 'promocion creado correctamente');
+        } else {
+            return redirect()->back()->withErrors(['msg' => 'Error al crear el promocion.']);
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Promocion $promocion)
+    public function show(Request $request)
     {
-        //
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Promocion $promocion)
+    public function edit(Request $request)
     {
-        //
+        $servicios=Servicio::all();
+        $promocion = Promocion::find($request->id_promocion);
+        return view("operativos.promocion.edit", compact('promocion','servicios'));
     }
 
     /**
@@ -52,14 +75,34 @@ class PromocionController extends Controller
      */
     public function update(Request $request, Promocion $promocion)
     {
-        //
+         // Validar los datos del formulario
+         $validatedData = $request->validate([
+            'nombre' => 'required',
+            'descripcion' => 'required',
+            'fecha_inicio' => 'required',
+            'fecha_fin' => 'required',
+            'descuento' => 'required',
+            'id_servicio' => 'required',
+
+        ]);
+
+
+        $promocion->update($validatedData);
+
+        if ($promocion) {
+            return redirect()->route('promocion.index')->with('success', 'promocion creado correctamente');
+        } else {
+            return redirect()->back()->withErrors(['msg' => 'Error al crear el promocion.']);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Promocion $promocion)
+    public function destroy($id)
     {
-        //
+        $promocion=Promocion::findOrFail($id);
+        $promocion->delete();
+        return redirect()->route('promocion.index');
     }
 }

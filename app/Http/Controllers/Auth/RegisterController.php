@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Cliente;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Hash;
@@ -57,4 +58,9 @@ class RegisterController extends Controller
 
         return redirect(RouteServiceProvider::HOME);
     }
+
+
+   
+
+
 }

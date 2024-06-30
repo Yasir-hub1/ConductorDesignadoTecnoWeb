@@ -23,8 +23,14 @@ class Personal extends Model
         'salario',
         'estado',
         'cargo',
-       
-       
-        
+
+
+
     ];
+
+     /* relacion uno a mucho */
+     public function gastos()
+     {
+         return $this->hasMany(GastoOperativo::class, 'id_personal', 'id');
+     }
 }

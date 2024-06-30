@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\GastoOperativo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GastoOperativoController extends Controller
 {
@@ -12,7 +13,8 @@ class GastoOperativoController extends Controller
      */
     public function index()
     {
-        //
+        $gastos=GastoOperativo::orderBy('id', 'desc')->paginate(10);
+        return view('operativos.gasto.index',compact('gastos'));
     }
 
     /**
@@ -20,7 +22,8 @@ class GastoOperativoController extends Controller
      */
     public function create()
     {
-        //
+
+        return view("operativos.gasto.create");
     }
 
     /**
@@ -28,7 +31,24 @@ class GastoOperativoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+                 // Validar los datos del formulario
+                 $validatedData = $request->validate([
+                    'monto' => 'required',
+                    'fecha' => 'required',
+                    'descripcion' => 'required',
+                    // 'id_personal' => Auth::user()->id,
+
+
+                ]);
+
+                $validatedData['id_personal']=/* Auth::user()->id ? Auth::user()->id : */11;
+                $gasto =GastoOperativo::create($validatedData);
+
+                if ($gasto) {
+                    return redirect()->route('gasto.index')->with('success', 'gasto creado correctamente');
+                } else {
+                    return redirect()->back()->withErrors(['msg' => 'Error al crear el promocion.']);
+                }
     }
 
     /**
@@ -42,9 +62,11 @@ class GastoOperativoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(GastoOperativo $gastoOperativo)
+    public function edit(Request $request)
     {
-        //
+
+        $gasto = GastoOperativo::find($request->id_gasto);
+        return view("operativos.gasto.edit", compact('gasto'));
     }
 
     /**
@@ -52,14 +74,33 @@ class GastoOperativoController extends Controller
      */
     public function update(Request $request, GastoOperativo $gastoOperativo)
     {
-        //
+          // Validar los datos del formulario
+          $validatedData = $request->validate([
+            'monto' => 'required',
+            'fecha' => 'required',
+            'descripcion' => 'required',
+            // 'id_personal' => Auth::user()->id,
+
+
+        ]);
+
+        $gastoOperativo->id_personal=Auth::user()->id;
+        $gastoOperativo->update($validatedData);
+
+        if ($gastoOperativo) {
+            return redirect()->route('gasto.index')->with('success', 'gasto creado correctamente');
+        } else {
+            return redirect()->back()->withErrors(['msg' => 'Error al crear el promocion.']);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(GastoOperativo $gastoOperativo)
+    public function destroy($id)
     {
-        //
+        $gasto=GastoOperativo::findOrFail($id);
+        $gasto->delete();
+        return redirect()->route('gasto.index');
     }
 }

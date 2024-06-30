@@ -8,8 +8,8 @@
                         <div class="card-header border-bottom pb-0">
                             <div class="d-sm-flex align-items-center mb-3">
                                 <div>
-                                    <h6 class="font-weight-semibold text-lg mb-0">Vehiculos</h6>
-                                    <p class="text-sm mb-sm-0">Lista de vehiculos registrados</p>
+                                    <h6 class="font-weight-semibold text-lg mb-0">Reserva</h6>
+                                    <p class="text-sm mb-sm-0">Lista de reserva registrados</p>
                                 </div>
                                 <div class="ms-auto d-flex">
                                     <div class="input-group input-group-sm ms-auto me-2">
@@ -25,7 +25,7 @@
                                         <input type="text" class="form-control form-control-sm" placeholder="Buscar">
                                     </div>
 
-                                    <a type="button" href="{{ route('vehiculo.create') }}"
+                                    <a type="button" href="{{ route('reserva.create') }}"
                                         class="btn btn-sm btn-dark btn-icon d-flex align-items-center mb-0 me-2">
                                         <span class="btn-inner--icon">
                                             <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"
@@ -45,21 +45,25 @@
                                     <thead class="bg-gray-100">
                                         <tr>
                                             <th class="text-secondary text-xs font-weight-semibold opacity-7">
-                                                Modelo</th>
+                                                Fecha de soliciud</th>
                                             <th class="text-secondary text-xs font-weight-semibold opacity-7">
-                                                    Marca</th>
+                                                Fecha de servicio</th>
                                             <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">
-                                                Placa</th>
-                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Nro de seguro                                            de nacimiento
+                                                Costo</th>
+                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Estado
                                             </th>
                                             <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">
-                                                Fecha vencimiento de seguro</th>
+                                                Tipo de servicio</th>
                                             <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">
-                                                Estado</th>
-                                                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">
-                                                    Conductor</th>
-                                            <th
+                                                Cliente</th>
+                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">
+                                                Servicio</th>
+                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">
+                                                Conductor</th>
 
+
+
+                                            <th
                                                 class="text-center text-secondary text-xs font-weight-semibold opacity-7">
                                             </th>
                                             <th
@@ -68,106 +72,92 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach ($vehiculos as $vehiculo)
+                                   <tbody>
+                                        @foreach ($reservas as $reserva)
                                             <tr>
                                                 <td>
                                                     <div class="d-flex px-2">
 
                                                         <div class="my-auto">
-                                                            <h6 class="mb-0 text-sm">{{ $vehiculo->modelo }}
-                                                               </h6>
+                                                            <h6 class="mb-0 text-sm">{{ $reserva->fecha_solicitud }}
+                                                                </h6>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <p class="text-sm font-weight-normal mb-0">{{ $vehiculo->marca }}
+                                                    <p class="text-sm font-weight-normal mb-0">{{ $reserva->fecha_servicio }}
                                                     </p>
                                                 </td>
                                                 <td>
-                                                    <p class="text-sm font-weight-normal mb-0">{{ $vehiculo->placa }}
+                                                    <p class="text-sm font-weight-normal mb-0">{{ $reserva->costo_adicional }}
                                                     </p>
                                                 </td>
                                                 <td>
+                                                    @if ($reserva->estado=="completado")
                                                     <span
-                                                        class="text-sm font-weight-normal">{{ $vehiculo->numero_de_seguro }}</span>
-                                                </td>
-                                                <td>
-                                                    <span
-                                                        class="badge badge-sm border border-success text-success bg-success">
-                                                        <svg width="9" height="9" viewBox="0 0 10 9"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                            stroke="currentColor" class="me-1">
-                                                            <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-                                                        {{ $vehiculo->fecha_vencimiento_seguro }}
-                                                    </span>
-                                                </td>
-                                                <td class="align-middle">
-                                                    @if ($vehiculo->estado=="activo")
-                                                    <span
-                                                    class="badge badge-sm border border-success text-success bg-success">
-                                                    <svg width="9" height="9" viewBox="0 0 10 9"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                        stroke="currentColor" class="me-1">
-                                                        <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round" />
-                                                    </svg>
-                                                    {{ $vehiculo->estado }}
-                                                </span>
+                                                    class="badge badge-sm border border-success text-success bg-success">{{ $reserva->estado }}</span>
 
-                                                    @elseif ($vehiculo->estado =="inactivo")
+                                                    @elseif ($reserva->estado=="pediente")
                                                     <span
-                                                    class="badge badge-sm border border-danger text-danger bg-danger">
-                                                    <svg width="9" height="9" viewBox="0 0 10 9"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                        stroke="currentColor" class="me-1">
-                                                        <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round" />
-                                                    </svg>
-                                                    {{ $vehiculo->estado }}
-                                                </span>
-                                                @elseif ($vehiculo->estado =="en servicio")
-                                                <span
-                                                    class="badge badge-sm border border-warning text-warning bg-warning">
-                                                    <svg width="9" height="9" viewBox="0 0 10 9"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                        stroke="currentColor" class="me-1">
-                                                        <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round" />
-                                                    </svg>
-                                                    {{ $vehiculo->estado }}
-                                                </span>
+                                                    class="badge badge-sm border border-info text-info bg-info">{{ $reserva->estado }}</span>
 
-                                                @elseif ($vehiculo->estado =="fuera de servicio")
-                                                <span
-                                                    class="badge badge-sm border border-info text-info bg-info">
-                                                    <svg width="9" height="9" viewBox="0 0 10 9"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                        stroke="currentColor" class="me-1">
-                                                        <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round" />
-                                                    </svg>
-                                                    {{ $vehiculo->estado }}
-                                                </span>
+                                                    @elseif ($reserva->estado=="cancelado")
+                                                    <span
+                                                    class="badge badge-sm border border-danger text-danger bg-danger">{{ $reserva->estado }}</span>
+
+                                                    @elseif ($reserva->estado=="en curso")
+                                                    <span
+                                                    class="badge badge-sm border border-info text-info bg-info">{{ $reserva->estado }}</span>
+
+
                                                     @endif
                                                 </td>
-
                                                 <td>
-                                                      {{--  @php
-                                                           dd($vehiculo->conductor);
+                                                    @if ($reserva->tipo_servicio == "con reserva")
+                                                    <span
+                                                        class="badge badge-sm border border-success text-success bg-success">
 
-                                                       @endphp
-                                                    @foreach ($vehiculo->conductor as $conductor)
-                                                    {{-- <span class="text-sm font-weight-normal">{{ $conductor->nombre }}</span>
-                                                    @endforeach --}}
-                                                    <td>{{ $vehiculo->conductor ? $vehiculo->conductor->nombre . ' ' . $vehiculo->conductor->apellido : 'Sin conductor' }}</td>
+                                                        {{ $reserva->tipo_servicio }}
+                                                    </span>
+                                                    @else
+                                                    <span
+                                                    class="badge badge-sm border border-info text-info bg-info">
+
+                                                    {{ $reserva->tipo_servicio }}
+                                                </span>
+
+                                                    @endif
+                                                </td>
+                                                <td class="align-middle">
+                                                    <div class="d-flex">
+
+                                                        <div class="ms-2">
+                                                            <p class="text-dark text-sm mb-0">{{ $reserva->cliente->nombre }}</p>
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <div class="d-flex">
+
+                                                        <div class="ms-2">
+                                                            <p class="text-dark text-sm mb-0">{{ $reserva->servicio->nombre }}</p>
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <div class="d-flex">
+
+                                                        <div class="ms-2">
+                                                            <p class="text-dark text-sm mb-0">{{ $reserva->conductor->nombre }}</p>
+
+                                                        </div>
+                                                    </div>
                                                 </td>
 
-
                                                 <td class="align-middle">
-                                                    <a href="{{ route('vehiculo.edit',["id_vehiculo"=>$vehiculo->id] ) }}"
+                                                    <a href="{{ route('reserva.edit', ['id_reserva' => $reserva->id]) }}"
                                                         class="text-secondary font-weight-bold text-xs"
                                                         data-bs-toggle="tooltip" data-bs-title="Editar">
                                                         <svg width="14" height="14" viewBox="0 0 15 16"
@@ -180,7 +170,7 @@
                                                 </td>
 
                                                 <td class="align-middle">
-                                                    <a href="{{ route('vehiculo.delete',$vehiculo->id ) }}"
+                                                    <a href="{{ route('reserva.delete', $reserva->id) }}"
                                                         class="text-secondary font-weight-bold text-xs"
                                                         data-bs-toggle="tooltip" data-bs-title="Eliminar">
                                                         <svg width="14" height="14" viewBox="0 0 24 24"
@@ -201,31 +191,32 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="border-top py-3 px-3 d-flex align-items-center">
+                          <div class="border-top py-3 px-3 d-flex align-items-center">
                                 <!-- Botón Previous -->
-                                @if ($vehiculos->onFirstPage())
+                                @if ($reservas->onFirstPage())
                                     <button class="btn btn-sm btn-white d-sm-block d-none mb-0"
                                         disabled>Anterior</button>
                                 @else
-                                    <a href="{{ $vehiculos->previousPageUrl() }}"
+                                    <a href="{{ $reservas->previousPageUrl() }}"
                                         class="btn btn-sm btn-white d-sm-block d-none mb-0">Anterior</a>
                                 @endif
 
                                 <nav aria-label="..." class="ms-auto">
                                     <ul class="pagination pagination-light mb-0">
                                         <!-- Links a las páginas -->
-                                        @for ($i = 1; $i <= $vehiculos->lastPage(); $i++)
-                                            <li class="page-item {{ $vehiculos->currentPage() == $i ? 'active' : '' }}">
+                                        @for ($i = 1; $i <= $reservas->lastPage(); $i++)
+                                            <li
+                                                class="page-item {{ $reservas->currentPage() == $i ? 'active' : '' }}">
                                                 <a class="page-link border-0 font-weight-bold"
-                                                    href="{{ $vehiculos->url($i) }}">{{ $i }}</a>
+                                                    href="{{ $reservas->url($i) }}">{{ $i }}</a>
                                             </li>
                                         @endfor
                                     </ul>
                                 </nav>
 
                                 <!-- Botón Next -->
-                                @if ($vehiculos->hasMorePages())
-                                    <a href="{{ $vehiculos->nextPageUrl() }}"
+                                @if ($reservas->hasMorePages())
+                                    <a href="{{ $reservas->nextPageUrl() }}"
                                         class="btn btn-sm btn-white d-sm-block d-none mb-0 ms-auto">Siguiente</a>
                                 @else
                                     <button class="btn btn-sm btn-white d-sm-block d-none mb-0 ms-auto"

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\MetodoDePago;
+use App\Models\SolicitarServicio;
+use App\Models\transacciones;
+use Carbon\Carbon;
 use finfo;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -43,7 +47,7 @@ class ClienteController extends Controller
             'genero' => 'required',
             'ci' => 'required',
         ]);
-        
+
         // Hashear la contraseña antes de guardar
         $validatedData['password'] = bcrypt($request->input('ci'));
 
@@ -96,7 +100,7 @@ class ClienteController extends Controller
             'genero' => 'required|string',
             'ci'=>'required|string',
         ]);
-    
+
         // Si la contraseña está presente en la solicitud, hashearla
         if ($request->has('password') && !empty($request->input('password'))) {
             $validatedData['password'] = bcrypt($request->input('ci'));
@@ -104,14 +108,14 @@ class ClienteController extends Controller
             // Mantener la contraseña actual si no se envió una nueva
             unset($validatedData['password']);
         }
-    
+
         // Añadir valores estáticos a los datos validados
         $validatedData['tipo_usuario'] = 'Cliente'; // Valor estático para tipo_usuario
         $validatedData['id_rol'] = 3; // Valor estático para id_rol
-    
+
         // Actualizar el cliente y guardar los datos
         $cliente->update($validatedData);
-    
+
         // Verificar si el cliente fue actualizado correctamente
         if ($cliente) {
             return redirect()->route('cliente.index')->with('success', 'Cliente actualizado correctamente');
@@ -128,4 +132,27 @@ class ClienteController extends Controller
         $cliente->delete();
         return redirect()->route('cliente.index');
     }
+
+
+
+    public function login(){
+        return view('view-cliente.Auth.login');
+    }
+
+
+    public function inicio(){
+        $reservas = SolicitarServicio::with(['transaccion.metodoPago'])->where("solicitar_servicio.id_cliente",auth()->user()->id)->orderBy('id', 'desc')->paginate(10);
+        // $reservas=SolicitarServicio::where("id_cliente",auth()->user()->id)->orderBy('id', 'desc')->paginate(10);
+        // dd($reservas);
+        return view('view-cliente.views.inicio',compact("reservas"));
+    }
+
+
+
+    public function pagoReserva(Request $request){
+     $id_reserva=$request->id_reserva;
+     return view('view-cliente.views.pago',compact("id_reserva"));
+    }
+
+
 }

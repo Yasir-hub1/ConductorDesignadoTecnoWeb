@@ -1,3 +1,4 @@
+@if ( Auth::user()->tipo_usuario == 'admin')
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 bg-slate-900 fixed-start " id="sidenav-main" style="overflow-x: hidden">
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
@@ -36,7 +37,7 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item">
+           {{--  <li class="nav-item">
                 <a class="nav-link  {{ is_current_route('tables') ? 'active' : '' }}" href="{{ route('tables') }}">
                     <div
                         class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
@@ -64,8 +65,8 @@
                     </div>
                     <span class="nav-link-text ms-1">Tables</span>
                 </a>
-            </li>
-            <li class="nav-item">
+            </li> --}}
+          {{--   <li class="nav-item">
                 <a class="nav-link {{ is_current_route('wallet') ? 'active' : '' }} " href="{{ route('wallet') }}">
                     <div
                         class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
@@ -86,8 +87,8 @@
                     </div>
                     <span class="nav-link-text ms-1">Wallet</span>
                 </a>
-            </li>
-           
+            </li> --}}
+
             <li class="nav-item mt-2">
                 <div class="d-flex align-items-center nav-link">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="ms-2"
@@ -125,7 +126,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="ms-2">
                         <path d="M19.79 7.1l-1.35-3.23C18.1 3.3 17.55 3 17 3H7c-.55 0-1.1.3-1.44.87L4.21 7.1C2.51 7.49 1.5 8.92 1.5 10.5V18c0 .55.45 1 1 1s1-.45 1-1v-1h16v1c0 .55.45 1 1 1s1-.45 1-1v-7.5c0-1.58-1.01-3.01-2.71-3.4zM6.85 5.58C6.93 5.4 7.14 5.25 7.41 5.25h9.17c.26 0 .47.15.56.33L18.15 8H5.85l1-2.42zM5 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm14 0c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
                     </svg>
-                    
+
                     <span class="font-weight-normal text-md ms-2">Sector Operativo</span>
                 </div>
             </li>
@@ -136,19 +137,80 @@
                 </a>
             </li>
             <li class="nav-item border-start my-0 pt-2">
-                <a class="nav-link position-relative ms-0 ps-2 py-2 {{ is_current_route('signin') ? 'active' : '' }}"
-                    href="{{ route('signin') }}">
-                    <span class="nav-link-text ms-1">Sign In</span>
+                <a class="nav-link position-relative ms-0 ps-2 py-2 {{ is_current_route('servicio.index') ? 'active' : '' }}"
+                    href="{{ route('servicio.index') }}">
+                    <span class="nav-link-text ms-1">Servicios</span>
                 </a>
             </li>
             <li class="nav-item border-start my-0 pt-2">
-                <a class="nav-link position-relative ms-0 ps-2 py-2 {{ is_current_route('signup') ? 'active' : '' }}"
-                    href="{{ route('signup') }}">
-                    <span class="nav-link-text ms-1">Sign Up</span>
+                <a class="nav-link position-relative ms-0 ps-2 py-2 {{ is_current_route('promocion.index') ? 'active' : '' }}"
+                    href="{{ route('promocion.index') }}">
+                    <span class="nav-link-text ms-1">Promocion</span>
                 </a>
             </li>
+
+            <li class="nav-item border-start my-0 pt-2">
+                <a class="nav-link position-relative ms-0 ps-2 py-2 {{ is_current_route('reserva.index') ? 'active' : '' }}"
+                    href="{{ route('reserva.index') }}">
+                    <span class="nav-link-text ms-1">Reserva</span>
+                </a>
+            </li>
+
+            <li class="nav-item mt-2">
+                <div class="d-flex align-items-center nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="ms-2">
+                        <path d="M19.79 7.1l-1.35-3.23C18.1 3.3 17.55 3 17 3H7c-.55 0-1.1.3-1.44.87L4.21 7.1C2.51 7.49 1.5 8.92 1.5 10.5V18c0 .55.45 1 1 1s1-.45 1-1v-1h16v1c0 .55.45 1 1 1s1-.45 1-1v-7.5c0-1.58-1.01-3.01-2.71-3.4zM6.85 5.58C6.93 5.4 7.14 5.25 7.41 5.25h9.17c.26 0 .47.15.56.33L18.15 8H5.85l1-2.42zM5 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm14 0c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+                    </svg>
+
+                    <span class="font-weight-normal text-md ms-2">Gestion de Pago</span>
+                </div>
+            </li>
+            <li class="nav-item border-start my-0 pt-2">
+                <a class="nav-link position-relative ms-0 ps-2 py-2 {{-- {{ is_current_route('pago.index') ? 'active' : '' }} --}}"
+                    href="{{-- {{ route('pago.index') }} --}}">
+                    <span class="nav-link-text ms-1">Pagos</span>
+                </a>
+            </li>
+
+            <li class="nav-item mt-2">
+                <div class="d-flex align-items-center nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="ms-2">
+                        <path d="M19.79 7.1l-1.35-3.23C18.1 3.3 17.55 3 17 3H7c-.55 0-1.1.3-1.44.87L4.21 7.1C2.51 7.49 1.5 8.92 1.5 10.5V18c0 .55.45 1 1 1s1-.45 1-1v-1h16v1c0 .55.45 1 1 1s1-.45 1-1v-7.5c0-1.58-1.01-3.01-2.71-3.4zM6.85 5.58C6.93 5.4 7.14 5.25 7.41 5.25h9.17c.26 0 .47.15.56.33L18.15 8H5.85l1-2.42zM5 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm14 0c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+                    </svg>
+
+                    <span class="font-weight-normal text-md ms-2">Gastos Operativo</span>
+                </div>
+            </li>
+            <li class="nav-item border-start my-0 pt-2">
+                <a class="nav-link position-relative ms-0 ps-2 py-2  {{ is_current_route('gasto.index') ? 'active' : '' }}"
+                    href="{{ route('gasto.index') }} ">
+                    <span class="nav-link-text ms-1">Gastos</span>
+                </a>
+            </li>
+
+
+            <li class="nav-item mt-2">
+                <div class="d-flex align-items-center nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="ms-2">
+                        <path d="M19.79 7.1l-1.35-3.23C18.1 3.3 17.55 3 17 3H7c-.55 0-1.1.3-1.44.87L4.21 7.1C2.51 7.49 1.5 8.92 1.5 10.5V18c0 .55.45 1 1 1s1-.45 1-1v-1h16v1c0 .55.45 1 1 1s1-.45 1-1v-7.5c0-1.58-1.01-3.01-2.71-3.4zM6.85 5.58C6.93 5.4 7.14 5.25 7.41 5.25h9.17c.26 0 .47.15.56.33L18.15 8H5.85l1-2.42zM5 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm14 0c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+                    </svg>
+
+                    <span class="font-weight-normal text-md ms-2">Reportes y Estadisticas</span>
+                </div>
+            </li>
+            <li class="nav-item border-start my-0 pt-2">
+                <a class="nav-link position-relative ms-0 ps-2 py-2  {{ is_current_route('reporte.inicio') ? 'active' : '' }}"
+                    href=" {{ route('reporte.inicio') }}">
+                    <span class="nav-link-text ms-1">Reportes y estadisticas</span>
+                </a>
+            </li>
+
+
+
         </ul>
     </div>
-   
-    
+
+
 </aside>
+
+@endif

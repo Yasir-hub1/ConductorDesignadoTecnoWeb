@@ -2,14 +2,15 @@
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <x-app.navbar />
         <div class="container-fluid py-4 px-5">
+
             <div class="row">
                 <div class="col-12">
                     <div class="card border shadow-xs mb-4">
                         <div class="card-header border-bottom pb-0">
                             <div class="d-sm-flex align-items-center mb-3">
                                 <div>
-                                    <h6 class="font-weight-semibold text-lg mb-0">Vehiculos</h6>
-                                    <p class="text-sm mb-sm-0">Lista de vehiculos registrados</p>
+                                    <h6 class="font-weight-semibold text-lg mb-0">Gasto Operativos</h6>
+                                    <p class="text-sm mb-sm-0">Lista de gasto operativos registrados</p>
                                 </div>
                                 <div class="ms-auto d-flex">
                                     <div class="input-group input-group-sm ms-auto me-2">
@@ -25,7 +26,7 @@
                                         <input type="text" class="form-control form-control-sm" placeholder="Buscar">
                                     </div>
 
-                                    <a type="button" href="{{ route('vehiculo.create') }}"
+                                    <a type="button" href="{{ route('gasto.create') }}"
                                         class="btn btn-sm btn-dark btn-icon d-flex align-items-center mb-0 me-2">
                                         <span class="btn-inner--icon">
                                             <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"
@@ -45,21 +46,15 @@
                                     <thead class="bg-gray-100">
                                         <tr>
                                             <th class="text-secondary text-xs font-weight-semibold opacity-7">
-                                                Modelo</th>
+                                                monto</th>
                                             <th class="text-secondary text-xs font-weight-semibold opacity-7">
-                                                    Marca</th>
-                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">
-                                                Placa</th>
-                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Nro de seguro                                            de nacimiento
-                                            </th>
-                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">
-                                                Fecha vencimiento de seguro</th>
-                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">
-                                                Estado</th>
-                                                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">
-                                                    Conductor</th>
-                                            <th
+                                                    fecha</th>
 
+                                            <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">descripcion</th>
+                                            {{-- <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">
+                                                personal</th> --}}
+
+                                            <th
                                                 class="text-center text-secondary text-xs font-weight-semibold opacity-7">
                                             </th>
                                             <th
@@ -69,105 +64,36 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($vehiculos as $vehiculo)
+                                        @foreach ($gastos as $gasto)
                                             <tr>
                                                 <td>
                                                     <div class="d-flex px-2">
 
                                                         <div class="my-auto">
-                                                            <h6 class="mb-0 text-sm">{{ $vehiculo->modelo }}
+                                                            <h6 class="mb-0 text-sm">{{ $gasto->monto }}
                                                                </h6>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <p class="text-sm font-weight-normal mb-0">{{ $vehiculo->marca }}
+                                                    <p class="text-sm font-weight-normal mb-0">{{ $gasto->fecha }}
                                                     </p>
                                                 </td>
                                                 <td>
-                                                    <p class="text-sm font-weight-normal mb-0">{{ $vehiculo->placa }}
+                                                    <p class="text-sm font-weight-normal mb-0">{{ $gasto->descripcion }}
                                                     </p>
                                                 </td>
-                                                <td>
+                                                {{-- <td>
                                                     <span
-                                                        class="text-sm font-weight-normal">{{ $vehiculo->numero_de_seguro }}</span>
-                                                </td>
-                                                <td>
-                                                    <span
-                                                        class="badge badge-sm border border-success text-success bg-success">
-                                                        <svg width="9" height="9" viewBox="0 0 10 9"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                            stroke="currentColor" class="me-1">
-                                                            <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-                                                        {{ $vehiculo->fecha_vencimiento_seguro }}
-                                                    </span>
-                                                </td>
-                                                <td class="align-middle">
-                                                    @if ($vehiculo->estado=="activo")
-                                                    <span
-                                                    class="badge badge-sm border border-success text-success bg-success">
-                                                    <svg width="9" height="9" viewBox="0 0 10 9"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                        stroke="currentColor" class="me-1">
-                                                        <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round" />
-                                                    </svg>
-                                                    {{ $vehiculo->estado }}
-                                                </span>
+                                                        class="text-sm font-weight-normal">{{ $gasto->personal }}</span>
+                                                </td> --}}
 
-                                                    @elseif ($vehiculo->estado =="inactivo")
-                                                    <span
-                                                    class="badge badge-sm border border-danger text-danger bg-danger">
-                                                    <svg width="9" height="9" viewBox="0 0 10 9"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                        stroke="currentColor" class="me-1">
-                                                        <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round" />
-                                                    </svg>
-                                                    {{ $vehiculo->estado }}
-                                                </span>
-                                                @elseif ($vehiculo->estado =="en servicio")
-                                                <span
-                                                    class="badge badge-sm border border-warning text-warning bg-warning">
-                                                    <svg width="9" height="9" viewBox="0 0 10 9"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                        stroke="currentColor" class="me-1">
-                                                        <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round" />
-                                                    </svg>
-                                                    {{ $vehiculo->estado }}
-                                                </span>
 
-                                                @elseif ($vehiculo->estado =="fuera de servicio")
-                                                <span
-                                                    class="badge badge-sm border border-info text-info bg-info">
-                                                    <svg width="9" height="9" viewBox="0 0 10 9"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                        stroke="currentColor" class="me-1">
-                                                        <path d="M1 4.42857L3.28571 6.71429L9 1" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round" />
-                                                    </svg>
-                                                    {{ $vehiculo->estado }}
-                                                </span>
-                                                    @endif
-                                                </td>
 
-                                                <td>
-                                                      {{--  @php
-                                                           dd($vehiculo->conductor);
-
-                                                       @endphp
-                                                    @foreach ($vehiculo->conductor as $conductor)
-                                                    {{-- <span class="text-sm font-weight-normal">{{ $conductor->nombre }}</span>
-                                                    @endforeach --}}
-                                                    <td>{{ $vehiculo->conductor ? $vehiculo->conductor->nombre . ' ' . $vehiculo->conductor->apellido : 'Sin conductor' }}</td>
-                                                </td>
-
+                                            </td>
 
                                                 <td class="align-middle">
-                                                    <a href="{{ route('vehiculo.edit',["id_vehiculo"=>$vehiculo->id] ) }}"
+                                                    <a href="{{ route('gasto.edit',["id_gasto"=>$gasto->id] ) }}"
                                                         class="text-secondary font-weight-bold text-xs"
                                                         data-bs-toggle="tooltip" data-bs-title="Editar">
                                                         <svg width="14" height="14" viewBox="0 0 15 16"
@@ -180,7 +106,7 @@
                                                 </td>
 
                                                 <td class="align-middle">
-                                                    <a href="{{ route('vehiculo.delete',$vehiculo->id ) }}"
+                                                    <a href="{{ route('gasto.delete',$gasto->id ) }}"
                                                         class="text-secondary font-weight-bold text-xs"
                                                         data-bs-toggle="tooltip" data-bs-title="Eliminar">
                                                         <svg width="14" height="14" viewBox="0 0 24 24"
@@ -203,29 +129,29 @@
                             </div>
                             <div class="border-top py-3 px-3 d-flex align-items-center">
                                 <!-- Botón Previous -->
-                                @if ($vehiculos->onFirstPage())
+                                @if ($gastos->onFirstPage())
                                     <button class="btn btn-sm btn-white d-sm-block d-none mb-0"
                                         disabled>Anterior</button>
                                 @else
-                                    <a href="{{ $vehiculos->previousPageUrl() }}"
+                                    <a href="{{ $gastos->previousPageUrl() }}"
                                         class="btn btn-sm btn-white d-sm-block d-none mb-0">Anterior</a>
                                 @endif
 
                                 <nav aria-label="..." class="ms-auto">
                                     <ul class="pagination pagination-light mb-0">
                                         <!-- Links a las páginas -->
-                                        @for ($i = 1; $i <= $vehiculos->lastPage(); $i++)
-                                            <li class="page-item {{ $vehiculos->currentPage() == $i ? 'active' : '' }}">
+                                        @for ($i = 1; $i <= $gastos->lastPage(); $i++)
+                                            <li class="page-item {{ $gastos->currentPage() == $i ? 'active' : '' }}">
                                                 <a class="page-link border-0 font-weight-bold"
-                                                    href="{{ $vehiculos->url($i) }}">{{ $i }}</a>
+                                                    href="{{ $gastos->url($i) }}">{{ $i }}</a>
                                             </li>
                                         @endfor
                                     </ul>
                                 </nav>
 
                                 <!-- Botón Next -->
-                                @if ($vehiculos->hasMorePages())
-                                    <a href="{{ $vehiculos->nextPageUrl() }}"
+                                @if ($gastos->hasMorePages())
+                                    <a href="{{ $gastos->nextPageUrl() }}"
                                         class="btn btn-sm btn-white d-sm-block d-none mb-0 ms-auto">Siguiente</a>
                                 @else
                                     <button class="btn btn-sm btn-white d-sm-block d-none mb-0 ms-auto"

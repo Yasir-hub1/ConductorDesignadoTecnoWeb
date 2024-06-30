@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class Cliente extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+class Cliente extends Authenticatable
 {
     use HasFactory;
 
@@ -22,7 +22,13 @@ class Cliente extends Model
         'tipo_usuario',
         'id_rol',
         'ci',
-       
-        
+
+
     ];
+
+      /* relacion uno a mucho */
+      public function solicitarServicios()
+      {
+          return $this->hasMany(SolicitarServicio::class, 'id_cliente', 'id');
+      }
 }

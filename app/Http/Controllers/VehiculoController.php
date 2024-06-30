@@ -13,7 +13,7 @@ class VehiculoController extends Controller
      */
     public function index()
     {
-        $vehiculos = Vehiculo::orderBy('id', 'desc')->paginate(10);
+        $vehiculos = Vehiculo::with('conductor')->orderBy('id', 'desc')->paginate(10);
         return view("operativos.vehiculo.index", compact('vehiculos'));
     }
 
@@ -42,7 +42,9 @@ class VehiculoController extends Controller
             'id_conductor' => 'required',
 
         ]);
-
+         $actualizarEstadoConductor=Conductor::find($request->id_conductor);
+         $actualizarEstadoConductor->estado="ocupado";
+         $actualizarEstadoConductor->update();
 
         $vehiculo =Vehiculo::create($validatedData);
 
